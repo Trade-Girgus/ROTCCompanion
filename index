@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ROTC Companion is an independent app built to help cadets train, study, practice, and prepare for commissioning." />
+  <title>ROTC Companion</title>
+  <style>
+    :root {
+      --bg: #0b0f0a;
+      --panel: #12180f;
+      --panel-2: #182012;
+      --text: #f3f0df;
+      --muted: #b9b49d;
+      --gold: #d6b25e;
+      --green: #4d6b35;
+      --green-2: #6f8f44;
+      --red: #8b2f28;
+      --border: rgba(214, 178, 94, 0.24);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(111, 143, 68, 0.18), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(139, 47, 40, 0.18), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .top-line {
+      height: 4px;
+      background: linear-gradient(90deg, var(--red), var(--gold), var(--green));
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 15, 10, 0.84);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--green), var(--gold));
+      display: grid;
+      place-items: center;
+      color: #111;
+      font-weight: 900;
+      box-shadow: 0 10px 24px var(--shadow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+
+    .hero {
+      padding: 74px 0 44px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      font-weight: 900;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(214, 178, 94, 0.12);
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 7vw, 5.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 660px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 900;
+      border: 1px solid var(--border);
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(214, 178, 94, 0.55);
+    }
+
+    .button.primary {
+      color: #13170f;
+      background: var(--gold);
+    }
+
+    .button.secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .hero-card {
+      border: 1px solid var(--border);
+      background: linear-gradient(160deg, rgba(24, 32, 18, 0.94), rgba(18, 24, 15, 0.84));
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 22px 44px var(--shadow);
+    }
+
+    .mission-label {
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .mission-text {
+      color: var(--text);
+      font-size: 1.06rem;
+      margin-bottom: 18px;
+    }
+
+    .chips {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: rgba(214, 178, 94, 0.08);
+      color: var(--gold);
+      border-radius: 999px;
+      padding: 8px 10px;
+      text-align: center;
+      font-weight: 900;
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+    }
+
+    section {
+      padding: 42px 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      max-width: 540px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(24, 32, 18, 0.94), rgba(18, 24, 15, 0.94));
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 18px 34px var(--shadow);
+    }
+
+    .card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(214, 178, 94, 0.12);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    ul {
+      list-style: none;
+      display: grid;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--gold);
+      font-weight: 900;
+      margin-right: 8px;
+    }
+
+    .privacy-wrap {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+    }
+
+    .notice {
+      border: 1px solid rgba(139, 47, 40, 0.5);
+      background: rgba(139, 47, 40, 0.12);
+      border-radius: var(--radius);
+      padding: 18px;
+      color: var(--muted);
+    }
+
+    .notice strong {
+      color: var(--text);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 820px) {
+      .nav {
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero,
+      .privacy-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section-header p {
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-line"></div>
+
+  <header>
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top">
+        <span class="brand-mark">RC</span>
+        <span>ROTC Companion</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#privacy">Privacy</a>
+        <a href="mailto:tradesarcade@gmail.com">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="container hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Train • Study • Practice • Commission</div>
+        <h1>One app for cadet readiness.</h1>
+        <p>
+          ROTC Companion is an independent mobile app built to help cadets keep essential ROTC tools,
+          study material, PT resources, and field references in one place.
+        </p>
+
+        <div class="actions">
+          <a class="button primary" href="#features">View Features</a>
+          <a class="button secondary" href="#privacy">Privacy Policy</a>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Mission statement">
+        <div class="mission-label">Mission Statement</div>
+        <p class="mission-text">
+          ROTC Companion trains, educates, and prepares cadets by giving them quick access to fitness tools,
+          Army knowledge, practical checklists, and training references needed to show up ready.
+        </p>
+        <div class="chips">
+          <span class="chip">TRAIN</span>
+          <span class="chip">EDUCATE</span>
+          <span class="chip">REHEARSE</span>
+          <span class="chip">PREPARE</span>
+        </div>
+      </aside>
+    </div>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-header">
+          <h2>What it does</h2>
+          <p>Built around the main things cadets need: PT, reference material, practice tools, and preparation.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-icon">PT</div>
+            <h3>Physical Training</h3>
+            <p>Track fitness and prepare for PT requirements.</p>
+            <ul>
+              <li>AFT calculator and event explanation</li>
+              <li>PT tracker for AFTs, rucks, workouts, and PRs</li>
+              <li>AlarmKit PT alarms and event checklists</li>
+              <li>Recovery and workout planning tools</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">INFO</div>
+            <h3>ROTC Reference</h3>
+            <p>Quick access to common knowledge cadets need during school, labs, and field training.</p>
+            <ul>
+              <li>Planning formats like OPORD, WARNO, FRAGO, and TLPs</li>
+              <li>Warrior skills, land navigation, radio etiquette, and reports</li>
+              <li>Uniform guidance and sizing tools</li>
+              <li>Acronyms, ranks, customs, and cadet basics</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">REP</div>
+            <h3>Practice Tools</h3>
+            <p>Practice information instead of only reading it.</p>
+            <ul>
+              <li>Quizzes and flashcards</li>
+              <li>Map plotting and land navigation drills</li>
+              <li>9-Line and order builders</li>
+              <li>Scenario practice and simulations</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-header">
+          <h2>Why it exists</h2>
+          <p>ROTC information is often spread across slides, handouts, notes, and cadre guidance. The goal is to make useful information easier to reach.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-icon">1</div>
+            <h3>Made for cadets</h3>
+            <p>Designed around the daily things cadets actually use: PT, uniforms, field skills, reports, formations, and preparation.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">2</div>
+            <h3>Built to be practical</h3>
+            <p>The app focuses on tools that help cadets act, not just read: calculators, trackers, alarms, checklists, and practice reps.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">3</div>
+            <h3>Independent project</h3>
+            <p>ROTC Companion is independently developed and is not an official Army, ROTC, Department of Defense, or government application.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="container privacy-wrap">
+        <div>
+          <div class="section-header">
+            <h2>Privacy Policy</h2>
+          </div>
+          <p style="color: var(--muted); margin-bottom: 16px;">
+            This section is a starting point. Replace it with your final privacy policy before publishing the app.
+          </p>
+          <a class="button primary" href="mailto:tradesarcade@gmail.com?subject=ROTC%20Companion%20Privacy%20Question">Privacy Questions</a>
+        </div>
+
+        <article class="card">
+          <h3>Privacy Policy Placeholder</h3>
+          <ul>
+            <li>ROTC Companion may store profile information, PT logs, alarms, checklist items, and app preferences on the user's device.</li>
+            <li>The app does not need to sell user data to function.</li>
+            <li>Alarm and notification permissions are used only to support reminders and PT wake-up features.</li>
+            <li>If cloud sync, analytics, accounts, or external services are added later, this policy should be updated.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="notice">
+          <strong>Disclaimer:</strong> ROTC Companion is not an official U.S. Army, ROTC, Cadet Command,
+          Department of Defense, or U.S. Government application. Cadets should always follow cadre guidance,
+          official regulations, current policy, and published school or battalion standards.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <span>© <span id="year"></span> ROTC Companion. All rights reserved.</span>
+      <span>Contact: <a href="mailto:tradesarcade@gmail.com">tradesarcade@gmail.com</a></span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
