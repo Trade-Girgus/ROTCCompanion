@@ -316,6 +316,21 @@ h3 {
   background: rgba(255, 255, 255, 0.055);
 }
 
+.inline-link {
+  display: inline-flex;
+  margin-top: 18px;
+  color: var(--gold);
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-color: rgba(214, 178, 94, 0.45);
+  text-underline-offset: 5px;
+}
+
+.inline-link:hover,
+.inline-link:focus-visible {
+  color: #f0d281;
+}
+
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
