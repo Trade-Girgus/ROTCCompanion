@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1109" />
+  <meta name="description" content="Open a shared ROTC Companion checklist and import it into the app." />
+  <title>Import Checklist | ROTC Companion</title>
+
+  <link rel="canonical" href="https://trade-girgus.github.io/ROTCCompanion/import.html" />
+  <link rel="icon" href="assets/rotc-companion-icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/rotc-companion-icon-192.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ROTC Companion" />
+  <meta property="og:title" content="Import Checklist into ROTC Companion" />
+  <meta property="og:description" content="Tap to open this shared checklist in ROTC Companion." />
+  <meta property="og:url" content="https://trade-girgus.github.io/ROTCCompanion/import.html" />
+  <meta property="og:image" content="https://trade-girgus.github.io/ROTCCompanion/assets/rotc-companion-icon-192.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Import Checklist into ROTC Companion" />
+  <meta name="twitter:description" content="Tap to open this shared checklist in ROTC Companion." />
+  <meta name="twitter:image" content="https://trade-girgus.github.io/ROTCCompanion/assets/rotc-companion-icon-192.png" />
+
+  <style>
+    :root {
+      --bg: #0b1109;
+      --card: #142116;
+      --card2: #0f1a12;
+      --text: rgba(255,255,255,.96);
+      --muted: rgba(255,255,255,.68);
+      --gold: #d7b15b;
+      --green: #64d47b;
+      --border: rgba(255,255,255,.16);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(215,177,91,.18), transparent 34%),
+        linear-gradient(135deg, #0b1109, #101b12 45%, #070a06);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+    .card {
+      width: min(460px, 100%);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(20,33,22,.94), rgba(10,16,10,.94));
+      box-shadow: 0 24px 70px rgba(0,0,0,.42);
+      padding: 22px;
+    }
+    .brand { display: flex; gap: 12px; align-items: center; margin-bottom: 18px; }
+    .brand img { width: 50px; height: 50px; border-radius: 14px; }
+    .brand small { display: block; color: var(--muted); font-weight: 700; margin-top: 2px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #111;
+      background: var(--gold);
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 14px 0 8px; font-size: clamp(30px, 8vw, 44px); line-height: .96; letter-spacing: -.04em; }
+    p { color: var(--muted); line-height: 1.55; font-weight: 650; }
+    .import-title {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 850;
+      word-break: break-word;
+    }
+    .actions { display: grid; gap: 10px; margin-top: 18px; }
+    a.button, button.button {
+      width: 100%;
+      appearance: none;
+      border: 0;
+      border-radius: 17px;
+      padding: 14px 16px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 950;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .primary { background: var(--gold); color: #111; }
+    .secondary { background: rgba(255,255,255,.08); color: var(--text); border: 1px solid var(--border) !important; }
+    .status { min-height: 20px; margin-top: 10px; color: var(--green); font-size: 13px; font-weight: 800; }
+    .codebox {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.28);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font: 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow-wrap: anywhere;
+    }
+    .missing .requires-payload { display: none; }
+    .missing .codebox { display: block; font-family: inherit; }
+  </style>
+</head>
+<body>
+  <main class="card" id="app-card">
+    <div class="brand">
+      <img src="assets/rotc-companion-icon-192.png" alt="" />
+      <div>
+        <strong>ROTC Companion</strong>
+        <small>Shared checklist import</small>
+      </div>
+    </div>
+
+    <span class="pill">Checklist Link</span>
+    <h1>Import this list.</h1>
+    <p>This link is meant to open a shared checklist inside ROTC Companion.</p>
+
+    <div class="import-title" id="list-title">Shared ROTC Companion Checklist</div>
+
+    <div class="actions requires-payload">
+      <a class="button primary" id="open-app" href="#">Open in ROTC Companion</a>
+      <button class="button secondary" type="button" id="copy-code">Copy Backup Code</button>
+    </div>
+
+    <p class="status" id="status"></p>
+    <div class="codebox" id="codebox">No checklist data was found in this link.</div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const payload = params.get("payload") || params.get("checklist") || params.get("code") || params.get("data") || "";
+    const title = params.get("title") || "Shared ROTC Companion Checklist";
+    const card = document.getElementById("app-card");
+    const titleBox = document.getElementById("list-title");
+    const openButton = document.getElementById("open-app");
+    const copyButton = document.getElementById("copy-code");
+    const status = document.getElementById("status");
+    const codebox = document.getElementById("codebox");
+
+    titleBox.textContent = title;
+
+    if (!payload) {
+      card.classList.add("missing");
+      codebox.textContent = "No checklist data was found in this link.";
+    } else {
+      const appURL = `rotccompanion://import-checklist?payload=${encodeURIComponent(payload)}`;
+      openButton.href = appURL;
+      codebox.textContent = payload;
+
+      openButton.addEventListener("click", () => {
+        status.textContent = "Opening ROTC Companion...";
+      });
+
+      copyButton.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(payload);
+          status.textContent = "Backup code copied.";
+        } catch (error) {
+          codebox.style.display = "block";
+          status.textContent = "Copy failed. Select and copy the code below.";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

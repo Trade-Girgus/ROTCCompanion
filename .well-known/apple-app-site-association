@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "ZNRYCQ3J38.tradesarcade.ROTC-campanion",
+        "paths": [
+          "/ROTCCompanion/import*",
+          "/ROTCCompanion/import.html*"
+        ]
+      }
+    ]
+  }
+}
